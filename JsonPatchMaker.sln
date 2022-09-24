@@ -3,13 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.32916.344
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonPatchMaker.Core", "JsonPatchMaker.Core\JsonPatchMaker.Core.csproj", "{C59D4478-2E45-4F72-B928-4D99CDF8615E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonPatchMaker.WinFormsApp", "JsonPatchMaker.WinFormsApp\JsonPatchMaker.WinFormsApp.csproj", "{C5F09843-1770-4D59-AE02-93620ABFEC78}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{CDCEE7FD-BE13-4195-BBBA-469D74D10775}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{54A0AD97-3287-4B3D-9436-B7B481FCC701}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{4A337869-BBD2-4706-A179-08D9C30DFB69}"
+	ProjectSection(SolutionItems) = preProject
+		docs\README.md = docs\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7BB23237-8561-4AC4-96BB-1CF531344C03}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonPatchMaker.Core", "src\JsonPatchMaker.Core\JsonPatchMaker.Core.csproj", "{21B4ACF8-1BA2-4A35-BC4C-732A8D124D08}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonPatchMaker.WinFormsApp", "src\JsonPatchMaker.WinFormsApp\JsonPatchMaker.WinFormsApp.csproj", "{B9F9D24C-ADC3-4E5B-9694-3218B93070A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,21 +27,21 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C59D4478-2E45-4F72-B928-4D99CDF8615E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C59D4478-2E45-4F72-B928-4D99CDF8615E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C59D4478-2E45-4F72-B928-4D99CDF8615E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C59D4478-2E45-4F72-B928-4D99CDF8615E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C5F09843-1770-4D59-AE02-93620ABFEC78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C5F09843-1770-4D59-AE02-93620ABFEC78}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C5F09843-1770-4D59-AE02-93620ABFEC78}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C5F09843-1770-4D59-AE02-93620ABFEC78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21B4ACF8-1BA2-4A35-BC4C-732A8D124D08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21B4ACF8-1BA2-4A35-BC4C-732A8D124D08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21B4ACF8-1BA2-4A35-BC4C-732A8D124D08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21B4ACF8-1BA2-4A35-BC4C-732A8D124D08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9F9D24C-ADC3-4E5B-9694-3218B93070A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9F9D24C-ADC3-4E5B-9694-3218B93070A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9F9D24C-ADC3-4E5B-9694-3218B93070A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9F9D24C-ADC3-4E5B-9694-3218B93070A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{C59D4478-2E45-4F72-B928-4D99CDF8615E} = {CDCEE7FD-BE13-4195-BBBA-469D74D10775}
-		{C5F09843-1770-4D59-AE02-93620ABFEC78} = {54A0AD97-3287-4B3D-9436-B7B481FCC701}
+		{21B4ACF8-1BA2-4A35-BC4C-732A8D124D08} = {CDCEE7FD-BE13-4195-BBBA-469D74D10775}
+		{B9F9D24C-ADC3-4E5B-9694-3218B93070A2} = {54A0AD97-3287-4B3D-9436-B7B481FCC701}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB9BC366-D6F0-4786-85FE-F8F6BD340232}

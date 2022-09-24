@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using JsonPatchMaker.Core.DataStructures;
+using JsonPatchMaker.WinFormsApp.Forms;
 
 namespace JsonPatchMaker.WinFormsApp
 {

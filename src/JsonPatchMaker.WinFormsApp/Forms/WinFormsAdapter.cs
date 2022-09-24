@@ -4,7 +4,7 @@ using JsonPatchMaker.Core.DataStructures;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace JsonPatchMaker.WinFormsApp
+namespace JsonPatchMaker.WinFormsApp.Forms
 {
     internal class WinFormsAdapter
     {
