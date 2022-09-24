@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net7.0-windows</TargetFramework>
+		<LangVersion>11</LangVersion>
+		<Nullable>enable</Nullable>
+		<UseWindowsForms>true</UseWindowsForms>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+		<ApplicationIcon>json.ico</ApplicationIcon>
+		<AssemblyName>JSON Patch Maker</AssemblyName>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="publish\**" />
+	  <EmbeddedResource Remove="publish\**" />
+	  <None Remove="publish\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="JsonPatchMaker.WinFormsApp.csproj.DotSettings" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="json.ico" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\JsonPatchMaker.Core\JsonPatchMaker.Core.csproj" />
+	</ItemGroup>
+
+</Project>
