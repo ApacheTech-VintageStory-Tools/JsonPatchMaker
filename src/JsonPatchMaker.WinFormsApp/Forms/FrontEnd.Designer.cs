@@ -1,4 +1,4 @@
-﻿namespace JsonPatchMaker.WinFormsApp
+﻿namespace JsonPatchMaker.WinFormsApp.Forms
 {
     partial class FrontEnd
     {

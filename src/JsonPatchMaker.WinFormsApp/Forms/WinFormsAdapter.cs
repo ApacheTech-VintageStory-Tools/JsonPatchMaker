@@ -6,25 +6,26 @@ using Newtonsoft.Json.Linq;
 
 namespace JsonPatchMaker.WinFormsApp.Forms
 {
+    /// <summary>
+    ///     Code-Behind / Adapter Layer for the WinForms APL.
+    /// </summary>
     internal class WinFormsAdapter
     {
         private readonly FrontEnd _frontEnd;
         private readonly ToolStripMenuItem _mnuAppSide;
 
-        private FileInfo? _jsonFile;
         private string _originalJson = string.Empty;
         private AppSide _side = AppSide.Universal;
+        private FileInfo? _jsonFile;
 
+        /// <summary>
+        /// Initialises a new instance of the <see cref="WinFormsAdapter"/> class.
+        /// </summary>
+        /// <param name="frontEnd">The front end.</param>
         internal WinFormsAdapter(FrontEnd frontEnd)
         {
             _frontEnd = frontEnd;
             _mnuAppSide = (ToolStripMenuItem)GetControl<MenuStrip>("barMenu")!.Items[^1];
-        }
-
-        private T? GetControl<T>(string controlName) where T : Component
-        {
-            var control = _frontEnd.Controls.Find(controlName, true).FirstOrDefault();
-            return control as T;
         }
 
         internal void ResetPatch()
@@ -61,7 +62,7 @@ namespace JsonPatchMaker.WinFormsApp.Forms
                 DefaultExt = "json",
                 FileName = "Select a JSON asset file...",
                 Filter = @"JSON Files (*.json)|*.json",
-                Title = @"Open JSON File",
+                Title = @"Open JSON File"
             };
 
             var gameDir = Environment.GetEnvironmentVariable("VINTAGE_STORY");
@@ -81,9 +82,7 @@ namespace JsonPatchMaker.WinFormsApp.Forms
         {
             _side = side;
             foreach (var button in _mnuAppSide.DropDownItems.OfType<ToolStripMenuItem>())
-            {
                 button.Checked = button.Equals(sender);
-            }
             RefreshPatch();
         }
 
@@ -94,6 +93,12 @@ namespace JsonPatchMaker.WinFormsApp.Forms
             var patch = Patcher.GeneratePatch(_originalJson, editedJson, _jsonFile!.FullName, _side);
             var json = patch.ToString(Formatting.Indented);
             GetControl<TextBox>("txtPatch")!.Text = json;
+        }
+
+        private T? GetControl<T>(string controlName) where T : Component
+        {
+            var control = _frontEnd.Controls.Find(controlName, true).FirstOrDefault();
+            return control as T;
         }
     }
 }
