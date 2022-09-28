@@ -37,13 +37,12 @@ namespace JsonPatchMaker.Core
                 return JToken.Parse("[]");
             }
         }
-
-
+        
         private static string GetRelativePath(string path)
         {
             var directory = new DirectoryInfo(path);
             while (!directory!.Name.Equals("assets")) directory = directory!.Parent;
-            var relPath = path.Replace($"{directory.FullName}\\", "");
+            var relPath = path.Replace($"{directory.FullName}{Path.DirectorySeparatorChar}", "");
             return relPath.Replace(Path.DirectorySeparatorChar.ToString(), "/");
         }
 
@@ -51,7 +50,7 @@ namespace JsonPatchMaker.Core
         {
             var directory = file.Directory;
             while (!directory!.Name.Equals("assets")) directory = directory!.Parent;
-            var relPath = file.FullName.Replace($"{directory.FullName}\\", "");
+            var relPath = file.FullName.Replace($"{directory.FullName}{Path.DirectorySeparatorChar}", "");
             return relPath.Replace(Path.DirectorySeparatorChar.ToString(), "/");
         }
 
