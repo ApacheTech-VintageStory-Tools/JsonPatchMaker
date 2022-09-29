@@ -12,11 +12,11 @@ namespace JsonPatchMaker.WinFormsApp.Forms
     internal class WinFormsAdapter
     {
         private readonly FrontEnd _frontEnd;
-        private readonly ToolStripMenuItem _mnuAppSide;
+        private readonly ToolStripMenuItem _mnuFile;
 
         private string _originalJson = string.Empty;
         private AppSide _side = AppSide.Universal;
-        private FileInfo? _jsonFile;
+        private AssetFile? _originalFile;
 
         /// <summary>
         /// Initialises a new instance of the <see cref="WinFormsAdapter"/> class.
@@ -25,14 +25,31 @@ namespace JsonPatchMaker.WinFormsApp.Forms
         internal WinFormsAdapter(FrontEnd frontEnd)
         {
             _frontEnd = frontEnd;
-            _mnuAppSide = (ToolStripMenuItem)GetControl<MenuStrip>("barMenu")!.Items[^1];
+            _mnuFile = (ToolStripMenuItem)GetControl<MenuStrip>("barMenu")!.Items[0];
+            GetControl<ComboBox>("cbxAppSide")!.SelectedIndex = 2;
         }
 
         internal void ResetPatch()
         {
             GetControl<TextBox>("txtOriginal")!.Text = _originalJson;
             GetControl<TextBox>("txtEdited")!.Text = _originalJson;
-            ChangeAppSides(GetControl<Control>("btnUniversal")!, AppSide.Universal);
+            GetControl<ComboBox>("cbxAppSide")!.SelectedIndex = 2;
+
+            if (!_originalFile!.IsGameAsset)
+            {
+                GetControl<TextBox>("txtDomain")!.ReadOnly = false;
+                GetControl<TextBox>("txtDirectory")!.ReadOnly = false;
+            }
+
+            GetControl<TextBox>("txtDomain")!.Text = _originalFile.Domain;
+            GetControl<TextBox>("txtDirectory")!.Text = _originalFile.Directory;
+            GetControl<TextBox>("txtFileName")!.Text = _originalFile.File.Name;
+            GetControl<TextBox>("txtAssetPath")!.Text = _originalFile.ToString();
+
+            foreach (ToolStripItem menuButton in _mnuFile.DropDown.Items)
+            {
+                menuButton.Enabled = true;
+            }
         }
 
         internal void SavePatchToFile()
@@ -43,7 +60,7 @@ namespace JsonPatchMaker.WinFormsApp.Forms
                 AutoUpgradeEnabled = true,
                 DefaultExt = "json",
                 FileName =
-                    $"{Path.GetFileNameWithoutExtension(_jsonFile!.FullName)}_{_side.ToString().ToLowerInvariant()}_patches.json",
+                    $"{Path.GetFileNameWithoutExtension(_originalFile!.File.FullName)}_{_side.ToString().ToLowerInvariant()}_patches.json",
                 Filter = @"JSON Files (*.json)|*.json",
                 Title = @"Save JSON Patch File"
             };
@@ -68,29 +85,39 @@ namespace JsonPatchMaker.WinFormsApp.Forms
             var gameDir = Environment.GetEnvironmentVariable("VINTAGE_STORY");
             if (gameDir is not null) ofd.InitialDirectory = Path.Combine(gameDir, "assets");
             if (ofd.ShowDialog() != DialogResult.OK) return;
-            _jsonFile = new FileInfo(ofd.FileName);
-
+            _originalFile = AssetFile.FromFileInfo(new FileInfo(ofd.FileName));
             _originalJson = JToken
-                .Parse(File.ReadAllText(_jsonFile.FullName))
+                .Parse(File.ReadAllText(_originalFile.File.FullName))
                 .ToString(Formatting.Indented);
 
-            GetControl<TextBox>("txtOriginal")!.Text = _originalJson;
-            GetControl<TextBox>("txtEdited")!.Text = _originalJson;
+            ResetPatch();
         }
 
-        internal void ChangeAppSides(object sender, AppSide side)
+        internal void UpdateAssetDomain(string domain)
         {
-            _side = side;
-            foreach (var button in _mnuAppSide.DropDownItems.OfType<ToolStripMenuItem>())
-                button.Checked = button.Equals(sender);
+            _originalFile!.Domain = domain;
+            GetControl<TextBox>("txtAssetPath")!.Text = _originalFile.ToString();
+            RefreshPatch();
+        }
+
+        internal void UpdateAssetDirectory(string directory)
+        {
+            _originalFile!.Directory = directory;
+            GetControl<TextBox>("txtAssetPath")!.Text = _originalFile.ToString();
+            RefreshPatch();
+        }
+
+        internal void ChangeAppSides(int side)
+        {
+            _side = (AppSide)side;
             RefreshPatch();
         }
 
         internal void RefreshPatch()
         {
-            if (_jsonFile is null) return;
+            if (_originalFile is null) return;
             var editedJson = GetControl<TextBox>("txtEdited")!.Text;
-            var patch = Patcher.GeneratePatch(_originalJson, editedJson, _jsonFile!.FullName, _side);
+            var patch = Patcher.GeneratePatch(_originalFile, editedJson, _side);
             var json = patch.ToString(Formatting.Indented);
             GetControl<TextBox>("txtPatch")!.Text = json;
         }
