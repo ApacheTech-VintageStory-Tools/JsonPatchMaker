@@ -26,7 +26,6 @@ namespace JsonPatchMaker.WinFormsApp.Forms
         {
             _frontEnd = frontEnd;
             _mnuFile = (ToolStripMenuItem)GetControl<MenuStrip>("barMenu")!.Items[0];
-            GetControl<ComboBox>("cbxAppSide")!.SelectedIndex = 2;
         }
 
         internal void ResetPatch()
@@ -61,8 +60,8 @@ namespace JsonPatchMaker.WinFormsApp.Forms
                 DefaultExt = "json",
                 FileName =
                     $"{Path.GetFileNameWithoutExtension(_originalFile!.File.FullName)}_{_side.ToString().ToLowerInvariant()}_patches.json",
-                Filter = @"JSON Files (*.json)|*.json",
-                Title = @"Save JSON Patch File"
+                Filter = "JSON Files (*.json)|*.json",
+                Title = "Save JSON Patch File"
             };
             if (sfd.ShowDialog() != DialogResult.OK) return;
             File.WriteAllText(sfd.FileName, GetControl<TextBox>("txtPatch")!.Text);
@@ -78,19 +77,31 @@ namespace JsonPatchMaker.WinFormsApp.Forms
                 CheckPathExists = true,
                 DefaultExt = "json",
                 FileName = "Select a JSON asset file...",
-                Filter = @"JSON Files (*.json)|*.json",
-                Title = @"Open JSON File"
+                Filter = "JSON Files (*.json)|*.json",
+                Title = "Open JSON File"
             };
 
             var gameDir = Environment.GetEnvironmentVariable("VINTAGE_STORY");
             if (gameDir is not null) ofd.InitialDirectory = Path.Combine(gameDir, "assets");
             if (ofd.ShowDialog() != DialogResult.OK) return;
-            _originalFile = AssetFile.FromFileInfo(new FileInfo(ofd.FileName));
-            _originalJson = JToken
-                .Parse(File.ReadAllText(_originalFile.File.FullName))
-                .ToString(Formatting.Indented);
+            LoadFile(new FileInfo(ofd.FileName));
+        }
 
-            ResetPatch();
+        internal void LoadFile(FileInfo file)
+        {
+            try
+            {
+                _originalFile = AssetFile.FromFileInfo(file);
+                _originalJson = JToken
+                    .Parse(File.ReadAllText(_originalFile.File.FullName))
+                    .ToString(Formatting.Indented);
+
+                ResetPatch();
+            }
+            catch
+            {
+                MessageBox.Show("An error occured while loading the file.", "JSON Patch Maker.");
+            }
         }
 
         internal void UpdateAssetDomain(string domain)

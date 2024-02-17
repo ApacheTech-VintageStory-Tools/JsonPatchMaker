@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using JsonPatchMaker.Core.DataStructures;
 
 namespace JsonPatchMaker.WinFormsApp.Forms
 {
@@ -19,6 +18,7 @@ namespace JsonPatchMaker.WinFormsApp.Forms
         {
             InitializeComponent();
             _adapter = new WinFormsAdapter(this);
+            cbxAppSide.SelectedIndex = 2;
         }
 
         /// <summary>
@@ -63,6 +63,55 @@ namespace JsonPatchMaker.WinFormsApp.Forms
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void txtDirectory_TextChanged(object sender, EventArgs e) => _adapter.UpdateAssetDirectory(txtDirectory.Text);
 
-        private void cbxAppSide_SelectedIndexChanged(object sender, EventArgs e) => _adapter?.ChangeAppSides(cbxAppSide.SelectedIndex);
+        private void cbxAppSide_SelectedIndexChanged(object sender, EventArgs e) => _adapter.ChangeAppSides(cbxAppSide.SelectedIndex);
+
+        private void FrontEnd_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data?.GetDataPresent(DataFormats.FileDrop) != true) return;
+            e.Effect = DragDropEffects.Copy;
+        }
+
+        private void FrontEnd_DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data?.GetData(DataFormats.FileDrop) is not string[] files)
+            {
+                MessageBox.Show("Only JSON files can be loaded by this application.", "JSON Patch Maker", MessageBoxButtons.OK);
+                return;
+            }
+
+            if (files.Length > 1)
+            {
+                MessageBox.Show("Can only edit one file a time.", "JSON Patch Maker", MessageBoxButtons.OK);
+                return;
+            }
+
+            var file = new FileInfo(files[0]);
+            if (!file.Exists)
+            {
+                MessageBox.Show("File could not be loaded.", "JSON Patch Maker", MessageBoxButtons.OK);
+                return;
+            }
+
+            if (!file.Extension.EndsWith("json"))
+            {
+                MessageBox.Show("Only JSON files can be loaded by this application.", "JSON Patch Maker", MessageBoxButtons.OK);
+                return;
+            }
+
+            var rootDirectory = Environment.GetEnvironmentVariable("VINTAGE_STORY");
+            if (rootDirectory is null)
+            {
+                MessageBox.Show("Environment variable 'VINTAGE_STORY' is not set.", "JSON Patch Maker", MessageBoxButtons.OK);
+                return;
+            }
+
+            if (!file.FullName.StartsWith(rootDirectory))
+            {
+                MessageBox.Show("Only vanilla asset files can be loaded with this application.", "JSON Patch Maker", MessageBoxButtons.OK);
+                return;
+            }
+
+            _adapter.LoadFile(file);
+        }
     }
 }
