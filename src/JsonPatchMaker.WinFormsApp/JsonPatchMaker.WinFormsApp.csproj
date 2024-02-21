@@ -10,6 +10,7 @@
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 		<ApplicationIcon>json.ico</ApplicationIcon>
 		<AssemblyName>JSON Patch Maker</AssemblyName>
+		<Version>0.2.0.0</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -24,6 +25,10 @@
 
 	<ItemGroup>
 	  <Content Include="json.ico" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
 
 	<ItemGroup>
