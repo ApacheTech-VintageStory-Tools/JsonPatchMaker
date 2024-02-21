@@ -12,11 +12,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 		docs\README.md = docs\README.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7BB23237-8561-4AC4-96BB-1CF531344C03}"
-	ProjectSection(SolutionItems) = preProject
-		.gitignore = .gitignore
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonPatchMaker.Core", "src\JsonPatchMaker.Core\JsonPatchMaker.Core.csproj", "{21B4ACF8-1BA2-4A35-BC4C-732A8D124D08}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonPatchMaker.WinFormsApp", "src\JsonPatchMaker.WinFormsApp\JsonPatchMaker.WinFormsApp.csproj", "{B9F9D24C-ADC3-4E5B-9694-3218B93070A2}"

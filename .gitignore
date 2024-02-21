@@ -32,6 +32,8 @@ bld/
 [Oo]ut/
 [Ll]og/
 [Ll]ogs/
+.releases/
+.debug/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
@@ -78,7 +80,7 @@ StyleCopReport.xml
 *.obj
 *.iobj
 *.pch
-# *.pdb
+*.pdb
 *.ipdb
 *.pgc
 *.pgd
@@ -177,14 +179,14 @@ DocProject/Help/Html2
 DocProject/Help/html
 
 # Click-Once directory
-# publish/
+publish/
 
 # Publish Web Output
 *.[Pp]ublish.xml
 *.azurePubxml
 # Note: Comment the next line if you want to checkin your web deploy settings,
 # but database connection strings (with potential passwords) will be unencrypted
-# *.pubxml
+*.pubxml
 *.publishproj
 
 # Microsoft Azure Web App publish settings. Comment the next line if you want to
